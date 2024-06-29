@@ -6,11 +6,11 @@ metadata:
   name: &app bitwarden-secrets-manager
   namespace: flux-system
 spec:
-  targetNamespace: security
+  targetNamespace: external-secrets
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/security/external-secrets/bitwarden-secrets-manager/app
+  path: ./kubernetes/apps/external-secrets/bitwarden-secrets-manager/app
   prune: true
   sourceRef:
     kind: GitRepository
