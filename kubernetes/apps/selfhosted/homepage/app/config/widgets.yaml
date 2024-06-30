@@ -1,9 +1,9 @@
 ---
 - openweathermap:
     label: Home
-    latitude: {{.HOMEPAGE_LATITUDE}}
-    longitude: {{.HOMEPAGE_LONGITUDE}}
+    latitude: {{HOMEPAGE_LATITUDE}}
+    longitude: {{HOMEPAGE_LONGITUDE}}
     units: metric # or imperial
     provider: openweathermap
-    apiKey: {{.HOMEPAGE_TOKEN}}
+    apiKey: {{HOMEPAGE_TOKEN}}
     cache: 5 # Time in minutes to cache API responses, to stay within limits
