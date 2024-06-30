@@ -90,8 +90,8 @@ data:
         text: "Howdy Hey!"
     - openweatherma:
         label: Home
-        latitude: {{HOMEPAGE_LATITUDE}}
-        longitude: {{HOMEPAGE_LONGITUDE}}
+        latitude: ${LATITUDE}
+        longitude: ${LONGITUDE}
         units: metric
         provider: openweathermap
         apiKey: {{HOMEPAGE_TOKEN}}
