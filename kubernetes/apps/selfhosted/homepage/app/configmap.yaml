@@ -27,7 +27,17 @@ data:
   docker.yaml: ""
   kubernetes.yaml: |
     mode: cluster
-  services.yaml: ""
+  services.yaml: |
+    - Network:
+        - Unifi:
+            href: https://unifi.ui.com
+            icon: unifi.png
+            description: Unifi Dashboard
+            widget:
+              type: unifi
+              url: https://192.168.1.1:443
+              username: {{UNIFI_USERNAME}}
+              password: {{UNIFI_PASSWORD}}
   settings.yaml: |
     title: Dashboard
     favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
@@ -102,3 +112,7 @@ data:
           timeStyle: short
           dateStyle: short
           hourCycle: h23
+    - unifi_console:
+        url: https://192.168.1.1:443
+        username: {{UNIFI_USERNAME}}
+        password: {{UNIFI_PASSWORD}}
