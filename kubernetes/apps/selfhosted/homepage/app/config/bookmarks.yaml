@@ -11,6 +11,6 @@
           description: The front page of the internet
 
 - Entertainment:
-    - YouTube:
+    - {{TEST_NAME}}:
         - abbr: YT
           href: https://youtube.com/
