@@ -49,6 +49,13 @@ spec:
           name: rook.pythonesque.io
           path: /
     cephClusterSpec:
+      dataDirHostPath: /var/lib/rook
+      crashCollector:
+        disable: false
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
       placement:
         mgr: &placement
           nodeAffinity:
@@ -66,13 +73,6 @@ spec:
         provider: host
         connections:
           requireMsgr2: true
-      dataDirHostPath: /var/lib/rook
-      crashCollector:
-        disable: false
-      dashboard:
-        enabled: true
-        urlPrefix: /
-        ssl: false
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -81,16 +81,28 @@ spec:
         nodes:
           - name: black-knight-01
             devices:
-              - name: "/dev/disk/by-uuid/17b854a7-cec1-4b6a-9f58-814c3190eb6a"
-              - name: "/dev/disk/by-uuid/20ffb3b6-b51e-49ec-b22b-e59ff0415ea4"
+              - name: "/dev/disk/by-uuid/17b854a7-cec1-4b6a-9f58-814c3190eb6a" # NVMe
+                config:
+                  deviceClass: nvme
+              - name: "/dev/disk/by-uuid/20ffb3b6-b51e-49ec-b22b-e59ff0415ea4" # SSD
+                config:
+                  deviceClass: ssd
           - name: black-knight-02
             devices:
-              - name: "/dev/disk/by-uuid/1a115ce6-fbf5-496d-be01-0d5d94b7bf20"
-              - name: "/dev/disk/by-uuid/bd480f8c-3e86-418e-bacb-b0394b3b8ba8"
+              - name: "/dev/disk/by-uuid/1a115ce6-fbf5-496d-be01-0d5d94b7bf20" # NVMe
+                config:
+                  deviceClass: nvme
+              - name: "/dev/disk/by-uuid/bd480f8c-3e86-418e-bacb-b0394b3b8ba8" # SSD
+                config:
+                  deviceClass: ssd
           - name: black-knight-03
             devices:
-              - name: "/dev/disk/by-uuid/3a0a8b25-b872-43fe-a48c-713723cbb427"
-              - name: "/dev/disk/by-uuid/e676cf25-f716-49aa-ab4d-6c2a1d2f7188"
+              - name: "/dev/disk/by-uuid/3a0a8b25-b872-43fe-a48c-713723cbb427" # NVMe
+                config:
+                  deviceClass: nvme
+              - name: "/dev/disk/by-uuid/e676cf25-f716-49aa-ab4d-6c2a1d2f7188" # SSD
+                config:
+                  deviceClass: ssd
       resources:
         mgr:
           limits:
@@ -135,33 +147,14 @@ spec:
             cpu: "200m"
             memory: "100Mi"
     cephBlockPools:
-      - name: ceph-nvme-blockpool
-        spec:
-          failureDomain: host
-          replicated:
-            size: 2
-        storageClass:
-          enabled: true
-          name: ceph-nvme-block
-          isDefault: false
-          reclaimPolicy: Delete
-          allowVolumeExpansion: true
-          volumeBindingMode: Immediate
-          parameters:
-            imageFormat: "2"
-            imageFeatures: layering
-            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
-            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
-            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
-            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
-            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
-            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
-            csi.storage.k8s.io/fstype: ext4
       - name: ceph-ssd-blockpool
         spec:
           failureDomain: host
           replicated:
             size: 2
+          parameters:
+            crushRoot: default
+            deviceClass: ssd
         storageClass:
           enabled: true
           name: ceph-ssd-block
@@ -190,6 +183,9 @@ spec:
           metadataPool:
             replicated:
               size: 3
+          parameters:
+            crushRoot: default
+            deviceClass: nvme
           dataPools:
             - failureDomain: host
               replicated:
@@ -235,47 +231,4 @@ spec:
       name: csi-ceph-filesystem
       isDefault: false
       deletionPolicy: Delete
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPool:
-            failureDomain: host
-            erasureCoded:
-              dataChunks: 2
-              codingChunks: 1
-          preservePoolsOnDelete: true
-          gateway:
-            hostNetwork: false
-            port: 80
-            resources:
-              requests:
-                cpu: 100m
-                memory: 1Gi
-              limits:
-                memory: 2Gi
-            instances: 2
-            priorityClassName: system-cluster-critical
-          healthCheck:
-            bucket:
-              interval: 60s
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          reclaimPolicy: Delete
-          volumeBindingMode: Immediate
-          parameters:
-            region: us-east-1
-        ingress:
-          enabled: true
-          annotations:
-            external-dns.alpha.kubernetes.io/target: internal.pythonesque.io
-            nginx.ingress.kubernetes.io/proxy-body-size: "0"
-            nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-          ingressClassName: internal
-          host:
-            name: rgw.pythonesque.io
-            path: /
+    cephObjectStores: []
