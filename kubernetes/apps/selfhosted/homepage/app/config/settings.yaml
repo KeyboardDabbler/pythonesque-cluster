@@ -2,11 +2,11 @@
 title: Dashboard
 favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
 useEqualHeights: true
+color: dracula
 theme: dark
 background:
-  image: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/101518784_p0.jpg
+  image: https://github.com/helpotters/dracula-wallpapers/blob/bd6282d192b6cf8ac4241a69abaa657a0da43e75/illustrations/galaxy/dracula-galaxy-282a36.png
   opacity: 20
-color: slate
 headerStyle: clean
 quicklaunch:
   searchDescriptions: true
