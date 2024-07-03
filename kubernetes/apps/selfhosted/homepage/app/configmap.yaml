@@ -98,13 +98,11 @@ data:
     - greeting:
         text_size: xl
         text: "Howdy Hey!"
-    - openweathermap:
+    - openmeteo:
         label: Home
-        latitude: {{HOMEPAGE_LATITUDE}}
-        longitude: {{HOMEPAGE_LONGITUDE}}
+        latitude: {{HOMEPAGE_VAR_HASS_LATITUDE}}
+        longitude: {{HOMEPAGE_VAR_HASS_LONGITUDE}}
         units: metric
-        provider: openweathermap
-        apiKey: {{HOMEPAGE_TOKEN}}
         cache: 5
     - datetime:
         text_size: l
@@ -112,7 +110,3 @@ data:
           timeStyle: short
           dateStyle: short
           hourCycle: h23
-    - unifi_console:
-        url: https://192.168.1.1:443
-        username: {{UNIFI_USERNAME}}
-        password: {{UNIFI_PASSWORD}}
