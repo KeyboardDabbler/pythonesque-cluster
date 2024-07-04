@@ -14,9 +14,6 @@
     diskUnits: bytes # optional, bytes (default) or bbytes. Only applies to disk
     expanded: true # show the expanded view
     label: holyGrail # optional
-- greeting:
-    text_size: xl
-    text: "Hey!"
 - search:
     focus: false
     target: _blank
