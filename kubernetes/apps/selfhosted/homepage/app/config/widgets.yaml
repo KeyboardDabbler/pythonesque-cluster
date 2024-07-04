@@ -14,6 +14,18 @@
     diskUnits: bytes # optional, bytes (default) or bbytes. Only applies to disk
     expanded: true # show the expanded view
     label: holyGrail # optional
+- kubernetes:
+    cluster:
+      show: true # Shows cluster-wide statistics
+      cpu: true # Shows the aggregate CPU stats
+      memory: true # Shows the aggregate memory stats
+      showLabel: true # Shows a custom label
+      label: "cluster"
+    nodes:
+      show: true # Shows node-specific statistics
+      cpu: true # Shows the CPU for each node
+      memory: true # Shows the memory for each node
+      showLabel: true # Shows the label, which is always the node name
 - search:
     focus: false
     target: _blank
