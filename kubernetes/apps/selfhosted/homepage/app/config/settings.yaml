@@ -13,6 +13,8 @@ quicklaunch:
   hideVisitURL: true
   provider: google
 language: en
+hideVersion: true
+statusStyle: "dot"
 layout:
   Network:
     style: row
