@@ -1,13 +1,12 @@
 ---
 - logo:
     icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/lds-transparent.png
-- search:
-    provider: [duckduckgo, google]
-    focus: false
-    target: _blank
 - greeting:
     text_size: xl
-    text: "Howdy Hey!"
+    text: "Hey!"
+- search:
+    focus: false
+    target: _blank
 - openmeteo:
     label: Home
     latitude: {{HOMEPAGE_VAR_HASS_LATITUDE}}
