@@ -16,37 +16,34 @@ language: en
 hideVersion: true
 statusStyle: "dot"
 layout:
-  Network:
+  waste of time:
     style: row
     columns: 3
     icon: mdi-network
-  Games:
+  life of graeme:
     style: row
     columns: 3
-    icon: mdi-minecraft
-  Calendar:
-    style: column
     icon: mdi-calendar
-  Video:
-    style: column
-    icon: mdi-play-circle
-  Books:
+  pythonesque:
     style: row
-    columns: 2
-    icon: mdi-book
-  Infrastructure:
+    columns: 3
+    icon: mdi-home-analytics
+  holy grail:
     style: row
-    columns: 5
+    columns: 3
     icon: mdi-server
-  Observability:
+  observability:
     style: row
     columns: 5
     icon: mdi-chart-line
-  Home:
+  GBstreams:
     style: row
-    columns: 5
-    icon: mdi-home-analytics
-  Downloads:
+    columns: 3
+  spam alot:
     style: row
     columns: 3
     icon: mdi-download-circle
+  realms:
+    style: row
+    columns: 3
+    icon: mdi-minecraft
