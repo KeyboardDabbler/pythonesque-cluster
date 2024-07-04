@@ -11,6 +11,7 @@ quicklaunch:
   hideInternetSearch: true
   showSearchSuggestions: true
   hideVisitURL: true
+language: en
 layout:
   Network:
     style: row
