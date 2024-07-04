@@ -14,9 +14,3 @@
     longitude: {{HOMEPAGE_VAR_HASS_LONGITUDE}}
     units: metric
     cache: 5
-- datetime:
-    text_size: l
-    format:
-      timeStyle: short
-      dateStyle: short
-      hourCycle: h23
