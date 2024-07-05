@@ -81,28 +81,16 @@ spec:
         nodes:
           - name: black-knight-01
             devices:
-              - name: "/dev/disk/by-uuid/17b854a7-cec1-4b6a-9f58-814c3190eb6a" # NVMe
-                config:
-                  deviceClass: nvme
-              - name: "/dev/disk/by-uuid/20ffb3b6-b51e-49ec-b22b-e59ff0415ea4" # SSD
-                config:
-                  deviceClass: ssd
+              - name: "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S6P7NJ0T307369R" # NVMe
+              - name: "/dev/disk/by-id/ata-CT2000MX500SSD1_2119E59F20CB" # SSD
           - name: black-knight-02
             devices:
-              - name: "/dev/disk/by-uuid/1a115ce6-fbf5-496d-be01-0d5d94b7bf20" # NVMe
-                config:
-                  deviceClass: nvme
-              - name: "/dev/disk/by-uuid/bd480f8c-3e86-418e-bacb-b0394b3b8ba8" # SSD
-                config:
-                  deviceClass: ssd
+              - name: "/dev/disk/by-id/nvme-KINGSTON_SA2000M81000G_50026B76839DD89B" # NVMe
+              - name: "/dev/disk/by-id/ata-CT2000MX500SSD1_2119E59F25D2" # SSD
           - name: black-knight-03
             devices:
-              - name: "/dev/disk/by-uuid/3a0a8b25-b872-43fe-a48c-713723cbb427" # NVMe
-                config:
-                  deviceClass: nvme
-              - name: "/dev/disk/by-uuid/e676cf25-f716-49aa-ab4d-6c2a1d2f7188" # SSD
-                config:
-                  deviceClass: ssd
+              - name: "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_1TB_S4EWNX0WA17677X" # NVMe
+              - name: "/dev/disk/by-id/ata-CT2000MX500SSD1_2119E59F266E" # SSD
       resources:
         mgr:
           limits:
@@ -147,19 +135,17 @@ spec:
             cpu: "200m"
             memory: "100Mi"
     cephBlockPools:
-      - name: ceph-ssd-blockpool
+      - name: ceph-blockpool-ssd
         spec:
+          deviceClass: ssd
           failureDomain: host
           replicated:
             size: 2
-          parameters:
-            crushRoot: default
-            deviceClass: ssd
         storageClass:
           enabled: true
-          name: ceph-ssd-block
+          name: ceph-block-ssd
           isDefault: false
-          reclaimPolicy: Delete
+          reclaimPolicy: Retain
           allowVolumeExpansion: true
           volumeBindingMode: Immediate
           parameters:
@@ -172,27 +158,49 @@ spec:
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
+      - name: ceph-blockpool-nvme
+        spec:
+          deviceClass: nvme
+          failureDomain: host
+          replicated:
+            size: 2
+        storageClass:
+          enabled: true
+          name: ceph-blockpool-nvme
+          isDefault: true
+          reclaimPolicy: Retain
+          allowVolumeExpansion: true
+          parameters:
+            imageFormat: "2"
+            imageFeatures: layering
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+            csi.storage.k8s.io/fstype: ext4
     cephBlockPoolsVolumeSnapshotClass:
-      enabled: false
+      enabled: true
       name: csi-ceph-blockpool
       isDefault: false
       deletionPolicy: Delete
     cephFileSystems:
       - name: &cephFileSystemName ceph-filesystem
         spec:
+          preservePoolsOnDelete: false
           metadataPool:
+            failureDomain: host
+            deviceClass: nvme
             replicated:
               size: 3
-          parameters:
-            crushRoot: default
-            deviceClass: nvme
           dataPools:
             - failureDomain: host
               replicated:
                 size: 3
               name: data0
           metadataServer:
-            activeCount: 1
+            activeCount: 2
             activeStandby: true
             priorityClassName: system-cluster-critical
             placement:
@@ -227,8 +235,7 @@ spec:
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
     cephFileSystemVolumeSnapshotClass:
-      enabled: false
+      enabled: true
       name: csi-ceph-filesystem
       isDefault: false
       deletionPolicy: Delete
-    cephObjectStores: []
