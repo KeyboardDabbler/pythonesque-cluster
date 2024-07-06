@@ -134,7 +134,6 @@ spec:
           requests:
             cpu: "200m"
             memory: "100Mi"
-
     cephBlockPools:
       - name: ceph-blockpool-ssd
         spec:
