@@ -137,7 +137,7 @@ spec:
     cephBlockPools:
       - name: ceph-blockpool-ssd
         spec:
-          deviceClass: ssd
+          deviceClass: ata
           failureDomain: host
           replicated:
             size: 2
