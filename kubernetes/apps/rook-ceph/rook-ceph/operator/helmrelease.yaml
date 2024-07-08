@@ -22,7 +22,7 @@ spec:
     cleanupOnFail: true
     remediation:
       strategy: rollback
-      retries: 3v
+      retries: 3
   # Values link: https://github.com/rook/rook/blob/release-1.14/deploy/charts/rook-ceph/values.yaml
   values:
     csi:
