@@ -2,7 +2,7 @@
 useEqualHeights: true
 color: gray
 background:
-  image: /images/dracula-galaxy-282a36.png
+  image: /images/zdracula-galaxy.png
   opacity: 30
 headerStyle: clean
 quicklaunch:
