@@ -28,7 +28,7 @@ spec:
   values:
     controllers:
       homepage:
-        replicas: 2
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -87,9 +87,9 @@ spec:
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
       images:
-        enabled: true
-        storageClass: ceph-filesystem
-        accessMode: ReadWriteMany
+        type: persistentVolumeClaim
+        storageClass: ceph-block
+        accessMode: ReadWriteOnce
         size: 1Gi
     extraVolumes:
       - name: images-volume
