@@ -40,10 +40,10 @@ spec:
     ingress:
       dashboard:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.pythonesque.io
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN_LOCAL}
         ingressClassName: internal
         host:
-          name: rook.pythonesque.io
+          name: rook.${SECRET_DOMAIN_LOCAL}
           path: /
     cephClusterSpec:
       mgr:
