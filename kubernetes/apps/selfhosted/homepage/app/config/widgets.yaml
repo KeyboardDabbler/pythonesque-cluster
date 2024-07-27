@@ -1,6 +1,6 @@
 ---
 - logo:
-    icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/lds-transparent.png
+    icon: /images/lds-transparent.png
 - glances:
     url: http://192.168.1.104:61208
     username: {{HOMEPAGE_VAR_GLANCES_USERNAME}}
