@@ -1,0 +1,31 @@
+---
+- codeAlot:
+    - Github:
+        - icon: github.png
+          href: 'https://github.com/KeyboardDabbler'
+    - Gmail:
+        - icon: gmail.png
+          href: 'http://gmail.com'
+    - Google Calendar:
+        - icon: google-calendar.png
+          href: 'https://calendar.google.com'
+- Communicate:
+    - Discord:
+        - icon: discord.png
+          href: 'https://discord.com/app'
+    - Gmail:
+        - icon: gmail.png
+          href: 'http://gmail.com'
+    - Google Calendar:
+        - icon: google-calendar.png
+          href: 'https://calendar.google.com'
+- Social:
+    - Spotify:
+        - icon: reddit.png
+          href: 'https://reddit.com'
+    - YouTube:
+        - icon: youtube.png
+          href: 'https://youtube.com'
+    - X:
+        - icon: x.png
+          href: 'https://x.com/'

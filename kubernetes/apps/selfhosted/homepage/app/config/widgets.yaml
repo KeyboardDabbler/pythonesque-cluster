@@ -1,0 +1,39 @@
+---
+- logo:
+    icon: https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/lds-transparent.png
+- glances:
+    url: http://192.168.1.104:61208
+    username: {{HOMEPAGE_VAR_GLANCES_USERNAME}}
+    password: {{HOMEPAGE_VAR_GLANCES_PASSWORD}}
+    version: 4
+    cpu: true # optional, enabled by default, disable by setting to false
+    mem: true # optional, enabled by default, disable by setting to false
+    cputemp: true # disabled by default
+    uptime: true # disabled by default
+    disk: / # disabled by default, use mount point of disk(s) in glances. Can also be a list (see below)
+    diskUnits: bytes # optional, bytes (default) or bbytes. Only applies to disk
+    expanded: true # show the expanded view
+    label: holyGrail # optional
+- kubernetes:
+    cluster:
+      show: true # Shows cluster-wide statistics
+      cpu: true # Shows the aggregate CPU stats
+      memory: true # Shows the aggregate memory stats
+      showLabel: true # Shows a custom label
+      label: "cluster"
+    nodes:
+      show: true # Shows node-specific statistics
+      cpu: true # Shows the CPU for each node
+      memory: true # Shows the memory for each node
+      showLabel: true # Shows the label, which is always the node name
+- openmeteo:
+    label: Home
+    latitude: {{HOMEPAGE_VAR_HASS_LATITUDE}}
+    longitude: {{HOMEPAGE_VAR_HASS_LONGITUDE}}
+    units: metric
+    cache: 5
+- unifi_console:
+    url: https://192.168.1.1
+    username: {{HOMEPAGE_VAR_UNIFI_USERNAME}}
+    password: {{HOMEPAGE_VAR_UNIFI_PASSWORD}}
+    site: pythonesque
