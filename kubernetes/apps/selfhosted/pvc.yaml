@@ -3,11 +3,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: homepage-images-pvc
-  namespace: selfhosted
 spec:
-  accessModes:
-  - ReadWriteOnce
+  accessModes: ["ReadWriteOnce"]
   resources:
     requests:
-      storage: 1Gi
+      storage: 500Mi
   storageClassName: ceph-block

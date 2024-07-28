@@ -88,16 +88,9 @@ spec:
             path: /app/config/widgets.yaml
       images:
         type: persistentVolumeClaim
-        storageClass: ceph-block
-        accessMode: ReadWriteOnce
-        size: 1Gi
-    extraVolumes:
-      - name: images-volume
-        persistentVolumeClaim:
-          claimName: homepage-images-pvc
-    extraVolumeMounts:
-      - name: images-volume
-        mountPath: /app/public/images
+        existingClaim: homepage-images-pvc
+        globalMounts:
+          - path: /app/public/images
     serviceAccount:
       create: true
       name: *app
