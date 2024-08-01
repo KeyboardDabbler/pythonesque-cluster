@@ -11,6 +11,7 @@ debug: false
 ui:
   title: Status | Gatus
   header: Status
+  logo: https://res.cloudinary.com/dpub6gcei/image/upload/v1722063432/pythonesque/homepage/lds-transparent_srkyzp.png
 connectivity:
   checker:
     target: 1.1.1.1:53
