@@ -17,6 +17,8 @@ spec:
   dependsOn:
     - name: rook-ceph-operator
       namespace: rook-ceph
+    - name: snapshot-controller
+      namespace: storage
   install:
     remediation:
       retries: 3
@@ -169,7 +171,7 @@ spec:
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
     cephFileSystemVolumeSnapshotClass:
-      enabled: false
+      enabled: true
       name: csi-ceph-filesystem
       isDefault: false
       deletionPolicy: Delete
@@ -197,8 +199,48 @@ spec:
             csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
             csi.storage.k8s.io/fstype: ext4
     cephBlockPoolsVolumeSnapshotClass:
-      enabled: false
+      enabled: true
       name: csi-ceph-blockpool
       isDefault: false
       deletionPolicy: Delete
-    cephObjectStores: []
+    cephObjectStores:
+      - name: ceph-objectstore
+        spec:
+          metadataPool:
+            failureDomain: host
+            replicated:
+              size: 3
+          dataPool:
+            failureDomain: host
+            erasureCoded:
+              dataChunks: 2
+              codingChunks: 2
+          preservePoolsOnDelete: true
+          gateway:
+            port: 80
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
+            instances: 2
+            priorityClassName: system-cluster-critical
+          healthCheck:
+            bucket:
+              interval: 60s
+        storageClass:
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          volumeBindingMode: Immediate
+          parameters:
+            region: nz
+        ingress:
+          enabled: true
+          ingressClassName: internal
+          annotations:
+            external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN_LOCAL}
+          host:
+            name: rgw.${SECRET_DOMAIN_LOCAL}
+            path: /
