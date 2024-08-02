@@ -63,12 +63,11 @@ spec:
             port: 8080
     ingress:
       app:
-        enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_PERSONAL}
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN_PERSONAL}"
         hosts:
-          - host: &host "vikunja.${SECRET_DOMAIN_PERSONAL}"
+          - host: "vikunja.${SECRET_DOMAIN_PERSONAL}"
             paths:
               - path: /
                 service:
