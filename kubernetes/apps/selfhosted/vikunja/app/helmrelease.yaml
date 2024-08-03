@@ -79,3 +79,15 @@ spec:
         existingClaim: vikunja-files-pvc
         globalMounts:
           - path: /app/vikunja/files
+      caddy-config:
+        type: configMap
+        name: vikunja-configmap
+        globalMounts:
+          - path: /etc/caddy/Caddyfile
+            subPath: Caddyfile
+      vikunja-config:
+        type: configMap
+        name: vikunja-configmap
+        globalMounts:
+          - path: /etc/vikunja/config.yml
+            subPath: Vikunja.yaml
