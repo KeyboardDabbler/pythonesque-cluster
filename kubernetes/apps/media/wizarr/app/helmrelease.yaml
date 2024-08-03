@@ -70,6 +70,6 @@ spec:
                   port: http
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: wizarr-config
         globalMounts:
           - path: /data/database
