@@ -6,9 +6,5 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ../../../../templates/gatus/personal/external
-configMapGenerator:
-  - name: vikunja-configmap
-    files:
-      - ./config/Caddyfile
 generatorOptions:
   disableNameSuffixHash: true
