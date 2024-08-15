@@ -4,6 +4,4 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./openebs/ks.yaml
-  - ./rook-ceph
-  - ./snapshot-controller/ks.yaml
+  - ./rook-ceph/ks.yaml
