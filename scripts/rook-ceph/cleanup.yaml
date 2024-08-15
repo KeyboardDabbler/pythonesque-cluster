@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cleanup-rook-disks
+  namespace: default
+spec:
+  template:
+    spec:
+      nodeName: black-knight-03  # Specify the node to run the job on
+      containers:
+      - name: cleanup
+        image: alpine:latest
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          #!/bin/sh
+          echo "Starting cleanup process"
+          DISK="/dev/disk/by-id/ata-CT2000MX500SSD1_2119E59F266E"  # Replace with your actual disk device
+          echo "Zapping disk $DISK"
+          sgdisk --zap-all $DISK
+          echo "Disk zapped"
+
+          echo "Wiping disk $DISK"
+          dd if=/dev/zero of="$DISK" bs=1M count=100 oflag=direct,dsync
+          echo "Disk wiped"
+
+          echo "Discarding disk $DISK"
+          blkdiscard $DISK
+          echo "Disk discarded"
+
+          echo "Informing OS of partition table changes"
+          partprobe $DISK
+          echo "Partition table changes informed"
+
+          echo "Removing Ceph device mappings"
+          ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %
+          echo "Ceph device mappings removed"
+
+          echo "Removing Ceph directories"
+          rm -rf /dev/ceph-*
+          rm -rf /dev/mapper/ceph--*
+          rm -rf /var/lib/rook
+          echo "Ceph directories removed"
+
+          echo "Cleanup process completed"
+      restartPolicy: Never
