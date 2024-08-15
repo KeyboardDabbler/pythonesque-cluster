@@ -1,3 +1,0 @@
----
-providerRegex: ^(black-knight-01|black-knight-02|black-knight-03)$
-bypassDnsResolution: true
