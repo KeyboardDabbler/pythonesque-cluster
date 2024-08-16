@@ -30,10 +30,10 @@ spec:
   # Values link: https://github.com/rook/rook/blob/release-1.14/deploy/charts/rook-ceph-cluster/values.yaml
   values:
     toolbox:
-      enabled: false
+      enabled: true
     monitoring:
       enabled: true
-      createPrometheusRules: true
+      createPrometheusRules: false
     configOverride: |
       [global]
       bdev_enable_discard = true
@@ -62,7 +62,7 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+      #  prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -129,11 +129,11 @@ spec:
         spec:
           metadataPool:
             replicated:
-              size: 3
+              size: 2
           dataPools:
             - failureDomain: host
               replicated:
-                size: 3
+                size: 2
               name: data0
           metadataServer:
             activeCount: 1
@@ -180,7 +180,7 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            size: 3
+            size: 2
         storageClass:
           enabled: true
           name: ceph-block
@@ -209,7 +209,7 @@ spec:
           metadataPool:
             failureDomain: host
             replicated:
-              size: 3
+              size: 2
           dataPool:
             failureDomain: host
             erasureCoded:
