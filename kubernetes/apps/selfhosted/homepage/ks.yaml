@@ -24,6 +24,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: *app
+      GATUS_SUBDOMAIN: homepage
       VOLSYNC_CAPACITY: 500Mi
-      VOLSYNC_CLAIM: *app-images
+      VOLSYNC_CLAIM: homepage-images
