@@ -17,7 +17,7 @@ spec:
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: ${APP_UID:-568}
-      runAsGroup: ${APP_GID:-568}
-      fsGroup: ${APP_GID:-568}
+      runAsUser: "${APP_UID:-568}"
+      runAsGroup: "${APP_GID:-568}"
+      fsGroup: "${APP_GID:-568}"
     capacity: "${VOLSYNC_CAPACITY}"
