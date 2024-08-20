@@ -5,8 +5,9 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
-  - ./cloudnative-pg.yaml
   - ./coredns.yaml
+  - ./crunchydata.yaml
+  - ./crunchy-users.yaml
   - ./dragonfly.yaml
   - ./external-secrets.yaml
   - ./jetstack.yaml
