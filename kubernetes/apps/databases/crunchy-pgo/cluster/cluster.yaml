@@ -87,14 +87,6 @@ spec:
             incremental: "0 3-23 * * *" # Every hour except 1-2am
       jobs:
         ttlSecondsAfterFinished: 60
-  dataSource:
-    pgbackrest:
-      stanza: db
-      configuration: *backupConfig
-      global: *backupFlag
-      repo:
-        name: repo1
-        s3: *minio
   service:
     type: LoadBalancer
     metadata:
