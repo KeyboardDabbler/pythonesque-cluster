@@ -18,9 +18,9 @@ spec:
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: ${APP_UID:-568}
-      runAsGroup: ${APP_GID:-568}
-      fsGroup: ${APP_GID:-568}
+      runAsUser: "${APP_UID:-568}"
+      runAsGroup: "${APP_GID:-568}"
+      fsGroup: "${APP_GID:-568}"
     pruneIntervalDays: 10
     retain:
       hourly: 24
