@@ -99,4 +99,4 @@ spec:
         server: ${HOLY_GRAIL_SERVER}
         path: /mnt/user/immich
         globalMounts:
-          - path: /usr/src/app/upload
+          - path: /photos
