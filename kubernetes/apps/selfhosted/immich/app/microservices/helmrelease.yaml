@@ -48,8 +48,10 @@ spec:
             resources:
               requests:
                 cpu: 10m
+                amd.com/gpu: 1
                 memory: 512Mi
               limits:
+                amd.com/gpu: 1
                 memory: 8Gi
             securityContext:
               allowPrivilegeEscalation: false
@@ -62,6 +64,8 @@ spec:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+          nodeSelector:
+            feature.node.kubernetes.io/pci-0300_1002.present: "true"
     persistence:
       library:
         type: nfs
