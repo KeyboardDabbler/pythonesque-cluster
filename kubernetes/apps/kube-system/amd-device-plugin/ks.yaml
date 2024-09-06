@@ -22,5 +22,5 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: *appname
+      APP: *app
     substituteFrom: []
