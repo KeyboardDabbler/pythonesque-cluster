@@ -68,8 +68,25 @@ spec:
             feature.node.kubernetes.io/pci-0300_1002.present: "true"
     persistence:
       library:
+        enabled: true
         type: nfs
         server: ${HOLY_GRAIL_SERVER}
         path: /mnt/user/immich
         globalMounts:
-          - path: /photos
+          - path: /usr/src/app/upload
+      geocoding-dump:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/.reverse-geocoding-dump
+      geoname-dump:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/node_modules/local-reverse-geocoder/geonames_dump
+      transformers-cache:
+        enabled: true
+        type: emptyDir
+        globalMounts:
+          - path: /usr/src/app/.transformers_cache
+

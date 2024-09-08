@@ -85,20 +85,24 @@ spec:
             port: 3003
     persistence:
       library:
+        enabled: true
         type: nfs
         server: ${HOLY_GRAIL_SERVER}
         path: /mnt/user/immich
         globalMounts:
-          - path: /photos
+          - path: /usr/src/app/upload
       cache:
-        type: emptyDir
+        enabled: true
+        existingClaim: immich-machine-learning-cache
         globalMounts:
           - path: /cache
       geocoding-dump:
+        enabled: true
         type: emptyDir
         globalMounts:
           - path: /usr/src/app/.reverse-geocoding-dump
-      tmp:
+      transformers-cache:
+        enabled: true
         type: emptyDir
         globalMounts:
-          - path: /tmp
+          - path: /usr/src/app/.transformers_cache
