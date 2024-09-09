@@ -1,4 +1,9 @@
 ---
+# Area
+area/docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/README.md"
 area/bootstrap:
   - changed-files:
       - any-glob-to-any-file: bootstrap/**/*
@@ -9,6 +14,10 @@ area/kubernetes:
   - changed-files:
       - any-glob-to-any-file: kubernetes/**/*
 area/taskfile:
+  - any-glob-to-any-file:
+          - ".taskfiles/**/*"
+          - "Taskfile.yaml"
+# Cluster
+cluster/main:
   - changed-files:
-      - any-glob-to-any-file: .taskfiles/**/*
-      - any-glob-to-any-file: Taskfile*
+      - any-glob-to-any-file: kubernetes/**/*
