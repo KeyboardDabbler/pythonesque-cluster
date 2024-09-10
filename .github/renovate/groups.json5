@@ -48,7 +48,7 @@
     },
     {
       "description": ["AMD Device Plugins Group"],
-      "groupName": "Intel-Device-Plugin",
+      "groupName": "AMD-Device-Plugin",
       "matchPackagePatterns": ["amd-device-plugin"],
       "matchDatasources": ["helm"],
       "group": {
