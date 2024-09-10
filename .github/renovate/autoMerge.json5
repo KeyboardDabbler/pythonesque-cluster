@@ -15,7 +15,7 @@
       "automerge": true,
       "automergeType": "branch",
       "ignoreTests": true,
-      "excludePackagePatterns": ["immich", "vector", "zigbee2mqtt", "siderolabs", "multus-cni", "pgo"],
+      "excludePackagePatterns": ["immich", "vector", "zigbee2mqtt", "siderolabs", "multus-cni", "pgo", "rocm/k8s-device-plugin"],
       "matchUpdateTypes": ["minor", "patch", "digest"]
     },
     {
