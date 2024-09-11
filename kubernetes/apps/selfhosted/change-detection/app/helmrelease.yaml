@@ -101,7 +101,7 @@ spec:
                   port: http
     persistence:
       data:
-        existingClaim: change-detection
+        existingClaim: "${VOLSYNC_CLAIM}"
         advancedMounts:
           change-detection:
             app:
