@@ -22,4 +22,3 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: changedetection
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_CLAIM: change-detection
