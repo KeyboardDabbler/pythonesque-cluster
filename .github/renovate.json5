@@ -1,31 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    "docker:enableMajor",
+    ":skipStatusChecks",
     "replacements:k8s-registry-move",
-    ":disableRateLimiting",
-    ":dependencyDashboard",
     ":semanticCommits",
     ":automergeDigest",
     ":automergeBranch",
-    ":skipStatusChecks",
-    ":timezone(Pacific/Auckland)",
+    "github>keyboarddabbler/renovate-config",
     "github>keyboarddabbler/pythonesque-cluster//.github/renovate/allowedVersions.json5",
     "github>keyboarddabbler/pythonesque-cluster//.github/renovate/autoMerge.json5",
     "github>keyboarddabbler/pythonesque-cluster//.github/renovate/clusters.json5",
-    "github>keyboarddabbler/pythonesque-cluster//.github/renovate/commitMessage.json5",
     "github>keyboarddabbler/pythonesque-cluster//.github/renovate/customManagers.json5",
     "github>keyboarddabbler/pythonesque-cluster//.github/renovate/grafanaDashboards.json5",
     "github>keyboarddabbler/pythonesque-cluster//.github/renovate/groups.json5",
-    "github>keyboarddabbler/pythonesque-cluster//.github/renovate/labels.json5",
-    "github>keyboarddabbler/pythonesque-cluster//.github/renovate/packageRules.json5",
-    "github>keyboarddabbler/pythonesque-cluster//.github/renovate/semanticCommits.json5",
-    "helpers:pinGitHubActionDigests"
+    "github>keyboarddabbler/pythonesque-cluster//.github/renovate/packageRules.json5"
   ],
-  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
-  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
-  "rebaseWhen": "conflicted",
   "ignorePaths": ["**/*.sops.*", "**/.archive/**", "**/resources/**"],
   "flux": {
     "fileMatch": [
