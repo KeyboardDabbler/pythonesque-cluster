@@ -120,3 +120,14 @@ spec:
         - path: /gbs/downloads
       incomplete:
         type: emptyDir
+      scripts:
+        type: configMap
+        name: sabnzbd-configmap
+        defaultMode: 0555
+        globalMounts:
+          - path: /config/scripts/replace_for.py
+            subPath: replace_for.py
+            readOnly: true
+          - path: /config/scripts/clean.py
+            subPath: clean.py
+            readOnly: true
