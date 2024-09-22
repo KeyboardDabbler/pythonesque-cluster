@@ -27,7 +27,6 @@ spec:
   - name: volsync
     namespace: storage
   - name: external-secrets-stores
-    namespace: security
   values:
     controllers:
       sabnzbd:
