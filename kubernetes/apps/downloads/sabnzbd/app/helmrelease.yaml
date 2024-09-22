@@ -26,7 +26,6 @@ spec:
     namespace: rook-ceph
   - name: volsync
     namespace: storage
-  - name: external-secrets-stores
   values:
     controllers:
       sabnzbd:
