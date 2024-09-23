@@ -47,7 +47,7 @@ spec:
       password: &password
         type: AlphaNumeric
     # Applications
-    - name: "bazarr"
+    - name: bazarr
       databases: ["bazarr_db"]
       password: *password
     - name: gatus
