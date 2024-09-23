@@ -25,3 +25,4 @@ spec:
       APP: *app
       GATUS_PATH: /ping
       VOLSYNC_CLAIM: prowlarr-config
+      VOLSYNC_CAPACITY: 1Gi
