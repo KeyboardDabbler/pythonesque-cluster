@@ -71,7 +71,7 @@ spec:
     - name: sonarr
       databases: ["sonarr_main"]
       password: *password
-    - name: sonarrAnime
+    - name: sonarranime
       databases: ["sonarranime_main"]
       password: *password
   backups:
