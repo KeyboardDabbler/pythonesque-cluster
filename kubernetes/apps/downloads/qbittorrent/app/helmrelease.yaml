@@ -96,7 +96,7 @@ spec:
           port-forward:
             image:
               repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
-              tag: "1.0"
+              tag: latest
             env:
               GLUETUN_CONTROL_SERVER_HOST: localhost
               GLUETUN_CONTROL_SERVER_PORT: 8000
