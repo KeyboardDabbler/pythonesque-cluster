@@ -95,16 +95,14 @@ spec:
               allowPrivilegeEscalation: false
           port-forward:
             image:
-              repository: ghcr.io/bjw-s-labs/gluetun-qb-port-sync
-              tag: 0.0.2@sha256:3e800b1eb0ea5b8e5aa70d37f9a012bd6d50f1a7cf4e2e6833cd921d1ef0d994
+              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
+              tag: "1.0"
             env:
               GLUETUN_CONTROL_SERVER_HOST: localhost
               GLUETUN_CONTROL_SERVER_PORT: 8000
-              QBITTORRENT_HOST: localhost
-              QBITTORRENT_WEBUI_PORT: *port
-              CRON_ENABLED: true
-              CRON_SCHEDULE: "*/5 * * * *"
-              LOG_TIMESTAMP: false
+              QBITTORRENT_SERVER: localhost
+              QBITTORRENT_PORT: *port
+              PORT_FORWARDED: "/tmp/gluetun/forwarded_port"
             securityContext:
               runAsUser: 568
               runAsGroup: 568
@@ -143,18 +141,11 @@ spec:
                   port: http
     persistence:
       config:
-        enabled: true
         existingClaim: qbittorrent-config
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /config
-      empty-config:
+      gluetun-data:
         type: emptyDir
-        advancedMounts:
-          qbittorrent:
-            port-forward:
-              - path: /config
+        globalMounts:
+          - path: /tmp/gluetun
       downloads:
         type: nfs
         server: ${HOLY_GRAIL_SERVER}
