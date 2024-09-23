@@ -143,7 +143,12 @@ spec:
                   port: http
     persistence:
       config:
+        enabled: true
         existingClaim: qbittorrent-config
+        advancedMounts:
+          qbittorrent:
+            app:
+              - path: /config
       empty-config:
         type: emptyDir
         advancedMounts:
