@@ -1,0 +1,27 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app prowlarr
+  namespace: flux-system
+spec:
+  targetNamespace: downloads
+  dependsOn:
+    - name: crunchy-pgo-cluster
+    - name: external-secrets-stores
+    - name: rook-ceph-cluster
+    - name: volsync
+  path: ./kubernetes/apps/downloads/prowlarr/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_PATH: /ping
+      VOLSYNC_CLAIM: prowlarr-config
