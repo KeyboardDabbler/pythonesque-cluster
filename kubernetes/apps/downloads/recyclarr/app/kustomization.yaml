@@ -9,7 +9,7 @@ resources:
 configMapGenerator:
   - name: recyclarr-configmap
     files:
-      - config/recyclarr.yml
+      - recyclarr.yml=./config/recyclarr.yml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
