@@ -40,7 +40,7 @@ spec:
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
               SONARR__LOG__DBENABLED: "False"
               SONARR__LOG__LEVEL: info
-              SONARR__SERVER__PORT: &port 8989
+              SONARR__SERVER__PORT: &port 8783
             envFrom:
               - secretRef:
                   name: sonarranime-secret
@@ -95,7 +95,7 @@ spec:
           gethomepage.dev/icon: sonarr.png
           gethomepage.dev/description: TV Downloads
           gethomepage.dev/widget.type: sonarr
-          gethomepage.dev/widget.url: http://sonarranime.downloads.svc.cluster.local:8989
+          gethomepage.dev/widget.url: http://sonarranime.downloads.svc.cluster.local:8783
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARRANIME_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN_LOCAL}
         hosts:
