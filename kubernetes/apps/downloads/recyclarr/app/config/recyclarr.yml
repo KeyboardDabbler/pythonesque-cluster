@@ -2,7 +2,7 @@
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 sonarr:
   sonarr:
-    base_url: http://sonarr.downloads.svc.cluster.local
+    base_url: http://sonarr.downloads.svc.cluster.local:8989
     api_key: !env_var SONARR_API_KEY
 
     delete_old_custom_formats: true
@@ -38,7 +38,7 @@ sonarr:
           - name: WEB-1080p
 
   sonarrAnime:
-    base_url: http://sonarranime.downloads.svc.cluster.local
+    base_url: http://sonarranime.downloads.svc.cluster.local:8989
     api_key: !env_var SONARRANIME_API_KEY
 
     delete_old_custom_formats: true
@@ -72,7 +72,7 @@ sonarr:
 
 radarr:
   radarr:
-    base_url: http://radarr.downloads.svc.cluster.local
+    base_url: http://radarr.downloads.svc.cluster.local:7878
     api_key: !env_var RADARR_API_KEY
 
     delete_old_custom_formats: true
