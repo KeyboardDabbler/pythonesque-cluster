@@ -1,0 +1,200 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app bazarr
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      bazarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/joryirving/bazarr
+              tag: 1.4.4@sha256:68f075f288bc424e39e4aafb350b72cec167f53ec6fde1cc7e2360fae5e4605c
+            env:
+              TZ: ${TIMEZONE}
+            envFrom:
+            - secretRef:
+                name: bazarr-secret
+            - secretRef:
+                  name: bazarr-db-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 6767
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: bazarr
+        ports:
+          http:
+            port: *port
+    ingress:
+      app:
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Bazarr
+          gethomepage.dev/icon: bazarr.png
+          gethomepage.dev/description: Subtitle Downloads
+          gethomepage.dev/widget.type: bazarr
+          gethomepage.dev/widget.url: http://bazarr.downloads.svc.cluster.local:6767
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_BAZARR_TOKEN}}` }}"
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN_LOCAL}
+        hosts:
+        - host: "{{ .Release.Name }}.${SECRET_DOMAIN_LOCAL}"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    persistence:
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /config/cache
+      config:
+        existingClaim: bazarr-config
+      log:
+        type: emptyDir
+        globalMounts:
+          - path: /config/log
+      tmp:
+        type: emptyDir
+      downloads:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/local/downloads/
+        globalMounts:
+        - path: /gbs/downloads
+      anime:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-anime/
+        globalMounts:
+        - path: /gbs/shows/tv-anime
+      comicbook:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-comicbook/
+        globalMounts:
+        - path: /gbs/shows/tv-comicbook
+      documentary:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-documentary/
+        globalMounts:
+        - path: /gbs/shows/tv-documentary
+      emergency:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-emergency/
+        globalMounts:
+        - path: /gbs/shows/tv-emergency
+      kids:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-kids/
+        globalMounts:
+        - path: /gbs/shows/tv-kids
+      programs:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-programs/
+        globalMounts:
+        - path: /gbs/shows/tv-programs
+      shows:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-shows/
+        globalMounts:
+        - path: /gbs/shows/tv-shows
+      movies:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies/
+        globalMounts:
+        - path: /gbs/movies/movies
+      mcomicbook:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-comicbook/
+        globalMounts:
+        - path: /gbs/movies/movies-comicbook
+      mkids:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-kids/
+        globalMounts:
+        - path: /gbs/movies/movies-kids
+      new:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-new/
+        globalMounts:
+        - path: /gbs/movies/movies-new
+      seasonal:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-seasonal/
+        globalMounts:
+        - path: /gbs/movies/movies-seasonal
+      standup:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-standup/
+        globalMounts:
+        - path: /gbs/movies/movies-standup
+      ppv:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/sports-ppv/
+        globalMounts:
+        - path: /gbs/other/sports-ppv
