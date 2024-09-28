@@ -1,0 +1,217 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+      nodeSelector:
+        feature.node.kubernetes.io/pci-0300_1002.present: "true"
+    controllers:
+      jellyfin:
+        containers:
+          app:
+            image:
+              repository: jellyfin/jellyfin
+              tag: 10.9.11
+            env:
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+              JELLYFIN_FFmpeg__probesize: 50000000
+              JELLYFIN_FFmpeg__analyzeduration: 50000000
+              JELLYFIN_PublishedServerUrl: &ip "${CLUSTER_LB_JELLYFIN}"
+              TZ: ${TIMEZONE}
+            resources:
+              requests:
+                amd.com/gpu: 1
+                cpu: 100m
+                memory: 1000Mi
+              limits:
+                amd.com/gpu: 1
+                memory: 4000Mi
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probe
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 30
+    service:
+      app:
+        controller: jellyfin
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: *ip
+        ports:
+          http:
+            port: 8096
+    ingress:
+      app:
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN_PUBLIC}
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/icon: jellyfin.png
+          gethomepage.dev/name: Jellyfin
+          gethomepage.dev/group: Media
+          gethomepage.dev/widget.type: jellyfin
+          gethomepage.dev/widget.url: http://jellyfin.media.svc.cluster.local:8096
+          gethomepage.dev/widget.key: '{{ "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}" }}'
+        hosts:
+          - host: play.${SECRET_DOMAIN_PUBLIC}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        existingClaim: jellyfin-config
+      cache:
+        type: emptyDir
+      transcode:
+        type: emptyDir
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
+      anime:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-anime/
+        globalMounts:
+        - path: /gbs/shows/tv-anime
+          readOnly: true
+      comicbook:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-comicbook/
+        globalMounts:
+        - path: /gbs/shows/tv-comicbook
+          readOnly: true
+      documentary:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-documentary/
+        globalMounts:
+        - path: /gbs/shows/tv-documentary
+          readOnly: true
+      emergency:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-emergency/
+        globalMounts:
+        - path: /gbs/shows/tv-emergency
+          readOnly: true
+      kids:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-kids/
+        globalMounts:
+        - path: /gbs/shows/tv-kids
+          readOnly: true
+      programs:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-programs/
+        globalMounts:
+        - path: /gbs/shows/tv-programs
+          readOnly: true
+      shows:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/tv-shows/
+        globalMounts:
+        - path: /gbs/shows/tv-shows
+          readOnly: true
+      movies:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies/
+        globalMounts:
+        - path: /gbs/movies/movies
+          readOnly: true
+      mcomicbook:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-comicbook/
+        globalMounts:
+        - path: /gbs/movies/movies-comicbook
+          readOnly: true
+      mkids:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-kids/
+        globalMounts:
+        - path: /gbs/movies/movies-kids
+          readOnly: true
+      new:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-new/
+        globalMounts:
+        - path: /gbs/movies/movies-new
+          readOnly: true
+      seasonal:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-seasonal/
+        globalMounts:
+        - path: /gbs/movies/movies-seasonal
+          readOnly: true
+      standup:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/movies-standup/
+        globalMounts:
+        - path: /gbs/movies/movies-standup
+          readOnly: true
+      ppv:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/sports-ppv/
+        globalMounts:
+        - path: /gbs/other/sports-ppv
+          readOnly: true
