@@ -38,7 +38,7 @@ sonarr:
           - name: WEB-1080p
 
   sonarrAnime:
-    base_url: http://sonarranime.downloads.svc.cluster.local:8989
+    base_url: http://sonarranime.downloads.svc.cluster.local:8783
     api_key: !env_var SONARRANIME_API_KEY
 
     delete_old_custom_formats: true
