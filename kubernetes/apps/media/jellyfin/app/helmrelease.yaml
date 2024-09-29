@@ -117,6 +117,12 @@ spec:
         hostPath: /dev/dri
         globalMounts:
           - path: /dev/dri
+      restore:
+        type: nfs
+        server: ${HOLY_GRAIL_SERVER}
+        path: /mnt/user/appdata/Jellyfin
+        globalMounts:
+        - path: /gbs/restore/jellyfin
       anime:
         type: nfs
         server: ${HOLY_GRAIL_SERVER}
