@@ -32,7 +32,7 @@ spec:
           app: &container
             image:
               repository: ghcr.io/buroa/qbtools
-              tag: latest@sha256:f5b0158718d6cac29a0f37bad0a33a0f5120290f87c4f098f989880e28899910
+              tag: latest@sha256:e90f03505cd422bf0dc3d26f2e5e3e9e18b47bae78e8ea881f06b9870250bf19
             env:
               TZ: ${TIMEZONE}
               POD_NAMESPACE:
