@@ -27,6 +27,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_PATH: /System/Ping
+      GATUS_SUBDOMAIN: play
       VOLSYNC_CLAIM: jellyfin-config
       VOLSYNC_CAPACITY: 350Gi
