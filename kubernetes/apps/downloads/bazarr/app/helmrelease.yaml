@@ -60,6 +60,16 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
+          subcleaner:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.3.0@sha256:5813a7da0ccd58f6dfb9d5e48480e2877355e6bb3d7d81c8908eb1adc3a23b6e
+              pullPolicy: IfNotPresent
+            args:
+              - --repo=https://github.com/KBlixt/subcleaner
+              - --branch=master
+              - --wait=86400 # 1 day
+              - --root=/add-ons
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -96,6 +106,8 @@ spec:
               identifier: app
               port: http
     persistence:
+      add-ons:
+        type: emptyDir
       cache:
         type: emptyDir
         globalMounts:
@@ -108,6 +120,12 @@ spec:
           - path: /config/log
       tmp:
         type: emptyDir
+      scripts:
+        type: configMap
+        name: bazarr-scripts
+        defaultMode: 0775
+        globalMounts:
+          - readOnly: true
       downloads:
         type: nfs
         server: ${HOLY_GRAIL_SERVER}
