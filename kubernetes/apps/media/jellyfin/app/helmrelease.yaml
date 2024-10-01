@@ -43,7 +43,7 @@ spec:
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               JELLYFIN_FFmpeg__probesize: 50000000
               JELLYFIN_FFmpeg__analyzeduration: 50000000
-              JELLYFIN_PublishedServerUrl: &ip "${CLUSTER_LB_JELLYFIN}"
+              # JELLYFIN_PublishedServerUrl: &ip "${CLUSTER_LB_JELLYFIN}"
               TZ: ${TIMEZONE}
             resources:
               requests:
@@ -82,7 +82,7 @@ spec:
         controller: jellyfin
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: *ip
+          io.cilium/lb-ipam-ips: "${CLUSTER_LB_JELLYFIN}"
         ports:
           http:
             port: 8096
