@@ -59,8 +59,8 @@ spec:
       - --ignore-ingress-tls-spec
     policy: sync
     sources: ["ingress", "service"]
-    txtOwnerId: main
-    txtPrefix: k8s.main.
+    txtOwnerId: default
+    txtPrefix: k8s.
     domainFilters:
       - "${SECRET_DOMAIN_LOCAL}"
       - "${SECRET_DOMAIN_PERSONAL}"
