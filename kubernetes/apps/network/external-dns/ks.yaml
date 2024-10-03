@@ -30,7 +30,7 @@ spec:
   targetNamespace: network
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/main/apps/network/external-dns/unifi
+  path: ./kubernetes/apps/network/external-dns/unifi
   prune: true
   sourceRef:
     kind: GitRepository
