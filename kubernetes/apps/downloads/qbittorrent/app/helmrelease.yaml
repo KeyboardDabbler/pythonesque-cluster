@@ -42,7 +42,7 @@ spec:
             nameOverride: qbittorrent
             image:
               repository: ghcr.io/onedr0p/qbittorrent
-              tag: 5.0.0@sha256:4e38b3193d15b3a6cc4ea205afdab13315340f6ee47f5f0e8af6e9158cbdc88e
+              tag: 5.0.0@sha256:93fd52f3ed64ca98bbb0462914f62360c7341a506316b56564c741d430ad9bd0
             env:
               TZ: ${TIMEZONE}
               QBITTORRENT__PORT: &port 80
