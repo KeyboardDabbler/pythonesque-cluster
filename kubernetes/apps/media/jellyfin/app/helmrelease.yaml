@@ -52,7 +52,7 @@ spec:
                 memory: 1000Mi
               limits:
                 amd.com/gpu: 1
-                memory: 4000Mi
+                memory: 10000Mi
             probes:
               liveness: &probe
                 enabled: true
