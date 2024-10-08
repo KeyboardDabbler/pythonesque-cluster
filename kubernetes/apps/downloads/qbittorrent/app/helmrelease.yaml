@@ -46,7 +46,7 @@ spec:
               tag: 5.0.0@sha256:3b58f98fa5e49a6a4c63b4c65c2fdabb8d32d89a1aa61f090e02b5453a1dbe8d
             env:
               TZ: ${TIMEZONE}
-              QBITTORRENT__PORT: &port 80
+              QBT_WEBUI_PORT: &port 80
               QBT_Preferences__WebUI__AlternativeUIEnabled: false
               QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
               QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
