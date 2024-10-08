@@ -80,7 +80,7 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: latest@sha256:22d5b0bfacfeeabf0c177a61faba6a633ac32fed4db78df8e8b5acefc42928a5
+              tag: latest@sha256:2f08f0e3b8a5e727ddae044930433c727f9b7cbea341552571fd927ce9aaa8b6
             env:
               DNS_ADDRESS: "10.2.0.1"
               VPN_SERVICE_PROVIDER: custom
