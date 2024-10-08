@@ -32,6 +32,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
       nodeSelector:
         feature.node.kubernetes.io/pci-0300_1002.present: "true"
+      terminationGracePeriodSeconds: 300
     controllers:
       jellyfin:
         containers:
