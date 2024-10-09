@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: docker.io/rocm/k8s-device-plugin
-              tag: labeller-1.25.2.4
+              tag: labeller-1.25.2.5
             workingDir: /root
             command: ["/root/k8s-node-labeller"]
             args:
