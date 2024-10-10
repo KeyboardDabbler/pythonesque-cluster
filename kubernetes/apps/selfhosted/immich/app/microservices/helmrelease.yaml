@@ -65,7 +65,7 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
           nodeSelector:
-            feature.node.kubernetes.io/pci-0300_1002.present: "true"
+            beta.amd.com/gpu.device-id.1681: "1"
     persistence:
       library:
         enabled: true
