@@ -29,6 +29,14 @@ spec:
     - name: amd-device-plugin
       namespace: kube-system
   values:
+    defaultPodOptions:
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+      nodeSelector:
+        feature.node.kubernetes.io/pci-0300_1002.present: "true"
+        kubernetes.io/arch: amd64
+      priorityClassName: system-node-critical
     controllers:
       amd-gpu-node-labeller:
         type: daemonset
@@ -36,7 +44,7 @@ spec:
           app:
             image:
               repository: docker.io/rocm/k8s-device-plugin
-              tag: labeller-1.25.2.7
+              tag: labeller-1.25.2.5
             workingDir: /root
             command: ["/root/k8s-node-labeller"]
             args:
@@ -56,24 +64,16 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: spec.nodeName
-            securityContext:
-              privileged: true
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 10m
+                cpu: 25m
                 memory: 10Mi
               limits:
                 memory: 100Mi
-    defaultPodOptions:
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-      nodeSelector:
-        feature.node.kubernetes.io/pci-0300_1002.present: "true"
-        kubernetes.io/arch: amd64
-      priorityClassName: system-node-critical
+            securityContext:
+              privileged: true
+              capabilities:
+                drop: ["ALL"]
     serviceAccount:
       create: false
       name: amd-gpu-node-labeller
