@@ -35,7 +35,6 @@ spec:
           operator: Exists
       nodeSelector:
         beta.amd.com/gpu.device-id.1681: "1"
-        kubernetes.io/arch: amd64
       priorityClassName: system-node-critical
     controllers:
       amd-gpu-node-labeller:
