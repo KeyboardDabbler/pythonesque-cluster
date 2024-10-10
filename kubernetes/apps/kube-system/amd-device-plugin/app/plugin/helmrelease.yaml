@@ -32,6 +32,7 @@ spec:
           operator: Exists
       nodeSelector:
         beta.amd.com/gpu.device-id.1681: "1"
+        kubernetes.io/arch: amd64
       priorityClassName: system-node-critical
     controllers:
       amd-device-plugin:
@@ -40,7 +41,7 @@ spec:
           app:
             image:
               repository: docker.io/rocm/k8s-device-plugin
-              tag: 1.25.2.8
+              tag: 1.25.2.7
             workingDir: /root
             command: ["./k8s-device-plugin"]
             args: ["-logtostderr=true", "-stderrthreshold=INFO", "-v=5"]
