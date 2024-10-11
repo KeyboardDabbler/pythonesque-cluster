@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/dgtlmoon/changedetection.io
-              tag: latest@sha256:079c08f2aa4d95feb671c4436ebd6c1598798ee3db21ca80cef523c02655afad
+              tag: latest@sha256:fbeb12e7ac47fa1f1985e048398651a2e6ae8232fd8530c6418c0a9c2a2bc73f
             env:
               TZ: ${TIMEZONE}
               BASE_URL: https://changedetection.${SECRET_DOMAIN_LOCAL}
