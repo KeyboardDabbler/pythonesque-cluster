@@ -14,19 +14,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-    - name: volsync
-      namespace: storage
   values:
     controllers:
       qbittorrent:
@@ -37,15 +24,16 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
             supplementalGroups: [10000]
-          terminationGracePeriodSeconds: 300
+          terminationGracePeriodSeconds: 120
         containers:
           app:
             nameOverride: qbittorrent
             image:
               repository: ghcr.io/onedr0p/qbittorrent
-              tag: 5.0.0@sha256:3b58f98fa5e49a6a4c63b4c65c2fdabb8d32d89a1aa61f090e02b5453a1dbe8d
+              tag: 4.6.7@sha256:5391f94b321d563c3b44136a5e799b7e4e4888926c1c31d3081a1cf3e74a9aec
             env:
               TZ: ${TIMEZONE}
+              UMASK: "022"
               QBT_WEBUI_PORT: &port 80
               QBT_Preferences__WebUI__AlternativeUIEnabled: false
               QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
@@ -80,8 +68,9 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: latest@sha256:b552116be0fa0df6da7a71577c67fcc1066a867d34d0469731dc35602924fc0d
+              tag: v3.39.1
             env:
+              DOT: "off"
               DNS_ADDRESS: "10.2.0.1"
               VPN_SERVICE_PROVIDER: custom
               VPN_TYPE: wireguard
@@ -94,6 +83,9 @@ spec:
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
+            resources:
+              limits:
+                squat.ai/tun: "1"
             securityContext:
               capabilities:
                 add:

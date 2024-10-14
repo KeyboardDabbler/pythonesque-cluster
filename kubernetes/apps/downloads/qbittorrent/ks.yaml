@@ -10,7 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 10m
+  interval: 30m
+  timeout: 5m
   path: "./kubernetes/apps/downloads/qbittorrent/app"
   prune: true
   sourceRef:
@@ -18,6 +19,8 @@ spec:
     name: home-kubernetes
   wait: true
   dependsOn:
+    - name: rook-ceph-cluster
+    - name: volsync
     - name: external-secrets-stores
   postBuild:
     substitute:
@@ -40,7 +43,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 10m
+  interval: 30m
+  timeout: 5m
   path: "./kubernetes/apps/downloads/qbittorrent/tools"
   prune: true
   sourceRef:
