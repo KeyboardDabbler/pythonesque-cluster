@@ -37,23 +37,23 @@ releases:
       - observability/prometheus-operator-crds
       - kube-system/cilium
   - name: kubelet-csr-approver
-    namespace: kube-system
+    namespace: system
     chart: postfinance/kubelet-csr-approver
     version: 1.2.2
     values:
-      - ../apps/kube-system/kubelet-csr-approver/app/helm-values.yaml
+      - ../apps/system/kubelet-csr-approver/app/helm-values.yaml
     needs:
       - observability/prometheus-operator-crds
       - kube-system/cilium
       - kube-system/coredns
   - name: spegel
-    namespace: kube-system
+    namespace: system
     chart: oci://ghcr.io/spegel-org/helm-charts/spegel
     version: v0.0.27
     values:
-      - ../apps/kube-system/spegel/app/helm-values.yaml
+      - ../apps/system/spegel/app/helm-values.yaml
     needs:
       - observability/prometheus-operator-crds
       - kube-system/cilium
       - kube-system/coredns
-      - kube-system/kubelet-csr-approver
+      - system/kubelet-csr-approver
