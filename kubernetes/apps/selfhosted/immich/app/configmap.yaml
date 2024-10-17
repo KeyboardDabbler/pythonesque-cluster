@@ -6,7 +6,7 @@ metadata:
   namespace: selfhosted
 data:
   # URLS
-  IMMICH_SERVER_URL: http://immich-server.selfhosted.svc.cluster.local:3001
+  IMMICH_SERVER_URL: http://immich-server.selfhosted.svc.cluster.local:2283
   IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.selfhosted.svc.cluster.local:3003
   PUBLIC_IMMICH_SERVER_URL: https://immich.${SECRET_DOMAIN_PERSONAL}
   # SETTINGS
