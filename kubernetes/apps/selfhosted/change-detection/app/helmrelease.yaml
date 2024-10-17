@@ -56,7 +56,7 @@ spec:
           browserless:
             image:
               repository: ghcr.io/browserless/chrome
-              tag: latest@sha256:51a8fcd4f84cc7611ea150b3388fe833fa0fddbd9ab8b2e5c958ed864a7e274c
+              tag: latest@sha256:01abedf975305433d070f7a6ba3c8e751d3263b77af3b972440097123bc31bc4
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
