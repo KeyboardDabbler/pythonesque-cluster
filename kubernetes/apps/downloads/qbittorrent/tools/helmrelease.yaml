@@ -22,7 +22,7 @@ spec:
           app: &container
             image:
               repository: ghcr.io/buroa/qbtools
-              tag: v0.19.2
+              tag: v0.19.3
             env:
               TZ: ${TIMEZONE}
             args:
