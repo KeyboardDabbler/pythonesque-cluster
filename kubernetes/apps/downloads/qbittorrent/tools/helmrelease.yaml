@@ -3,28 +3,18 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app qbtools
+  name: qbtools
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
       version: 3.5.1
+      interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: qbittorrent
-      namespace: downloads
   values:
     controllers:
       reannounce:
@@ -32,19 +22,16 @@ spec:
           app: &container
             image:
               repository: ghcr.io/buroa/qbtools
-              tag: latest@sha256:2ec29ca452902d8fbfd306744fc3e4fcbcdf94337e71dfc7e1a371c374dbc656
+              tag: v0.19.2
             env:
               TZ: ${TIMEZONE}
-              POD_NAMESPACE:
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.namespace
-            args: [
-              "reannounce",
-              "--process-seeding",
-              "--server", "qbittorrent.$(POD_NAMESPACE).svc.cluster.local",
-              "--port", "80"
-            ]
+            args:
+              - reannounce
+              - --process-seeding
+              - --server
+              - &qbittorrent_host qbittorrent.downloads.svc.cluster.local
+              - --port
+              - &qbittorrent_port "80"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
