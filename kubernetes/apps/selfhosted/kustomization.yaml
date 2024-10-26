@@ -6,5 +6,5 @@ resources:
   - ./namespace.yaml
   #- ./change-detection/ks.yaml
   #- ./homepage/ks.yaml
-  #- ./immich/ks.yaml
+  - ./immich/ks.yaml
   #- ./linkding/ks.yaml
