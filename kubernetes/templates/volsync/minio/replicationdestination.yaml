@@ -13,11 +13,14 @@ spec:
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-10Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    capacity: "${VOLSYNC_CAPACITY:-2Gi}"
     moverSecurityContext:
-      runAsUser: "${APP_UID:-568}"
-      runAsGroup: "${APP_GID:-568}"
-      fsGroup: "${APP_GID:-568}"
-    capacity: "${VOLSYNC_CAPACITY}"
+      runAsUser: ${VOLSYNC_PUID:-568}
+      runAsGroup: ${VOLSYNC_PGID:-568}
+      fsGroup: ${VOLSYNC_PGID:-568}
+    enableFileDeletion: true
+    cleanupCachePVC: true
+    cleanupTempPVC: true
