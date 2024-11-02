@@ -110,7 +110,7 @@ spec:
         type: emptyDir
       downloads:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/local/downloads/
         globalMounts:
         - path: /gbs/downloads

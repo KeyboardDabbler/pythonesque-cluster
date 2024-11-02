@@ -154,7 +154,7 @@ spec:
               - path: /config
       downloads:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/local/downloads/
         advancedMounts:
           qbittorrent:

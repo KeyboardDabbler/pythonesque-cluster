@@ -21,4 +21,4 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "10.0.10.0/24"
+    - cidr: "${NODE_CIDR}"

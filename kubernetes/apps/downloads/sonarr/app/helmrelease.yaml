@@ -114,43 +114,43 @@ spec:
         type: emptyDir
       downloads:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/local/downloads/
         globalMounts:
         - path: /gbs/downloads
       comicbook:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-comicbook/
         globalMounts:
         - path: /gbs/shows/tv-comicbook
       documentary:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-documentary/
         globalMounts:
         - path: /gbs/shows/tv-documentary
       emergency:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-emergency/
         globalMounts:
         - path: /gbs/shows/tv-emergency
       kids:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-kids/
         globalMounts:
         - path: /gbs/shows/tv-kids
       programs:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-programs/
         globalMounts:
         - path: /gbs/shows/tv-programs
       shows:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-shows/
         globalMounts:
         - path: /gbs/shows/tv-shows

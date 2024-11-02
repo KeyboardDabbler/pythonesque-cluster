@@ -114,49 +114,49 @@ spec:
         type: emptyDir
       downloads:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/local/downloads/
         globalMounts:
         - path: /gbs/downloads
       movies:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies/
         globalMounts:
         - path: /gbs/movies/movies
       comicbook:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-comicbook/
         globalMounts:
         - path: /gbs/movies/movies-comicbook
       kids:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-kids/
         globalMounts:
         - path: /gbs/movies/movies-kids
       new:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-new/
         globalMounts:
         - path: /gbs/movies/movies-new
       seasonal:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-seasonal/
         globalMounts:
         - path: /gbs/movies/movies-seasonal
       standup:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-standup/
         globalMounts:
         - path: /gbs/movies/movies-standup
       ppv:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/sports-ppv/
         globalMounts:
         - path: /gbs/other/sports-ppv

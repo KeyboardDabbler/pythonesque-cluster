@@ -114,13 +114,13 @@ spec:
         type: emptyDir
       downloads:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/local/downloads/
         globalMounts:
         - path: /gbs/downloads
       anime:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-anime/
         globalMounts:
         - path: /gbs/shows/tv-anime

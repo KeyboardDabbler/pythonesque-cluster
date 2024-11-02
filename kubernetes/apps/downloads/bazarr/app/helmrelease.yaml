@@ -128,91 +128,91 @@ spec:
           - readOnly: true
       downloads:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/local/downloads/
         globalMounts:
         - path: /gbs/downloads
       anime:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-anime/
         globalMounts:
         - path: /gbs/shows/tv-anime
       comicbook:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-comicbook/
         globalMounts:
         - path: /gbs/shows/tv-comicbook
       documentary:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-documentary/
         globalMounts:
         - path: /gbs/shows/tv-documentary
       emergency:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-emergency/
         globalMounts:
         - path: /gbs/shows/tv-emergency
       kids:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-kids/
         globalMounts:
         - path: /gbs/shows/tv-kids
       programs:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-programs/
         globalMounts:
         - path: /gbs/shows/tv-programs
       shows:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/tv-shows/
         globalMounts:
         - path: /gbs/shows/tv-shows
       movies:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies/
         globalMounts:
         - path: /gbs/movies/movies
       mcomicbook:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-comicbook/
         globalMounts:
         - path: /gbs/movies/movies-comicbook
       mkids:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-kids/
         globalMounts:
         - path: /gbs/movies/movies-kids
       new:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-new/
         globalMounts:
         - path: /gbs/movies/movies-new
       seasonal:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-seasonal/
         globalMounts:
         - path: /gbs/movies/movies-seasonal
       standup:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/movies-standup/
         globalMounts:
         - path: /gbs/movies/movies-standup
       ppv:
         type: nfs
-        server: ${HOLY_GRAIL_SERVER}
+        server: ${HOLY_GRAIL_ADDR}
         path: /mnt/user/sports-ppv/
         globalMounts:
         - path: /gbs/other/sports-ppv

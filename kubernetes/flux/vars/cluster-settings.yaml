@@ -6,6 +6,4 @@ metadata:
   namespace: flux-system
 data:
   TIMEZONE: "Pacific/Auckland"
-  CPGO_LB_ADDR: "192.168.222.104"
-  CPGO_VECTOR_LB_ADDR: "192.168.222.105"
-  CLUSTER_LB_JELLYFIN: "192.168.222.110"
+  NODE_CIDR: "10.0.10.0/24"

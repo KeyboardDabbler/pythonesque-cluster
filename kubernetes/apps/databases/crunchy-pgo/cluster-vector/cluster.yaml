@@ -108,7 +108,7 @@ spec:
     metadata:
       annotations:
         external-dns.alpha.kubernetes.io/hostname: cpgo-vector.${SECRET_DOMAIN_LOCAL}
-        io.cilium/lb-ipam-ips: "${CPGO_VECTOR_LB_ADDR}"
+        io.cilium/lb-ipam-ips: ${SVC_CPGO_VECTOR_ADDR:=temp}
   monitoring:
     pgmonitor:
       exporter:
