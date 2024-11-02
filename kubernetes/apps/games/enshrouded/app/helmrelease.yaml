@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: enshrouded
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 10000
+        runAsGroup: 10000
+        fsGroup: 10000
+    controllers:
+      enshrouded:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: sknnr/enshrouded-dedicated-server
+              tag: proton-latest@sha256:6ed45d8fad2e08734058d18b5aed0766acc014fc344bd7e6a13e587cd60dc43e
+            env:
+              SERVER_NAME: "Pigs of Garbage"
+              GAME_PORT: &game_port 15636
+              QUERY_PORT: &query_port 15637
+              SERVER_SLOTS: 16
+            envFrom:
+              - secretRef:
+                  name: enshrouded-secret
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+    service:
+      app:
+        controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${SVC_ENSHROUDED_ADDR:=temp}
+        ports:
+          gameport:
+            enabled: true
+            port: *game_port
+            protocol: UDP
+          queryport:
+            enabled: true
+            port: *query_port
+            protocol: UDP
+    ingress:
+      main:
+        enabled: false #nginx doesn't support non-https
+        className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN_PUBLIC}
+        hosts:
+        - host: "{{ .Release.Name }}.${SECRET_DOMAIN_PUBLIC}"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: gameport
+    persistence:
+      data:
+        existingClaim: enshrouded
+        globalMounts:
+          - path: /home/steam/enshrouded/savegame
+            readOnly: false
+      config:
+        type: secret
+        name: enshrouded-secret
+        globalMounts:
+          - path: /home/steam/enshrouded/enshrouded_server.json
+            subPath: enshrouded_server.json
