@@ -24,6 +24,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CLAIM: palworld
       VOLSYNC_CAPACITY: 50Gi
       VOLSYNC_UID: "1000"
       VOLSYNC_GID: "1000"
