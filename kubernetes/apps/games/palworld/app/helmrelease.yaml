@@ -47,7 +47,7 @@ spec:
               PAL_EGG_DEFAULT_HATCHING_TIME: "2.000000" #Default for Normal Mode
               ENABLE_NON_LOGIN_PENALTY: false
               ## Server Settings
-              SERVER_NAME: [NZ] Pigs of Garbage
+              SERVER_NAME: Pigs of Garbage
               # SERVER_DESCRIPTION:
               PUBLIC_PORT: &port 8211
               RCON_ENABLED: true
