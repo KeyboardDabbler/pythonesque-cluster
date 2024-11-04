@@ -1,0 +1,97 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app core-keeper
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      core-keeper:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: escaping/core-keeper-dedicated
+              tag: latest
+            env:
+              ## Container Settings
+              TZ: ${TIMEZONE}
+              WORLD_NAME: Pigs of Garbage # The name to use for the server.
+              WORLD_MODE: "0" # TSets the world mode for the world. Can be Normal (0), Hard (1), Creative (2), Casual (4).
+              DATA_PATH: &datapath /home/steam/core-keeper-data # Save file location. If not set it defaults to a sub-folder named "DedicatedServer" at the default Core Keeper save location.
+              MAX_PLAYERS: "8" # Maximum number of players that will be allowed to connect to server.
+              DISCORD: "1" # Enables discord webhook features witch sends GameID to a channel.
+              # SERVER_IP: 0.0.0.0 # Only used if port is set. Sets the address that the server will bind to.
+              # SERVER_PORT: &port "27015" # What port to bind to. If not set, then the server will use the Steam relay network. If set the clients will connect to the server directly and the port needs to be open.
+            envFrom:
+            - secretRef:
+                name: core-keeper-secret
+            probes:
+              liveness: &disabled
+                enabled: false
+              readiness: *disabled
+              startup: *disabled
+            resources:
+              requests:
+                cpu: 1000m
+              limits:
+                memory: 8Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [10000]
+        seccompProfile: { type: RuntimeDefault }
+    # service:
+    #   app:
+    #     controller: *app
+    #     type: LoadBalancer
+    #     annotations:
+    #       lbipam.cilium.io/ips: ${SVC_COREKEEPER_ADDR:=temp}
+    #     ports:
+    #       game:
+    #         protocol: UDP
+    #         port: *port
+    # ingress:
+    #   app:
+    #     enabled: false #nginx doesn't support non-https
+    #     className: external
+    #     annotations:
+    #       external-dns.alpha.kubernetes.io/target: ipv4.${SECRET_DOMAIN}
+    #     hosts:
+    #     - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+    #       paths:
+    #       - path: /
+    #         service:
+    #           identifier: app
+    #           port: game
+    persistence:
+      config:
+        existingClaim: *app
+        globalMounts:
+        - path: *datapath
+      files:
+        existingClaim: core-keeper-server-files
+        globalMounts:
+          - path: /home/steam/core-keeper-dedicated
