@@ -11,6 +11,7 @@ resources:
   - ./crunchy-users.yaml
   - ./dragonfly.yaml
   - ./external-secrets.yaml
+  - ./itzg.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
