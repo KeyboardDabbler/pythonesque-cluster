@@ -2,8 +2,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - ./core-keeper/ks.yaml
-  - ./enshrouded/ks.yaml
-  - ./minecraft/ks.yaml
-  - ./palworld/ks.yaml
+  - ./externalsecret.yaml
+  - ./helmrelease.yaml
+  - ./pvc.yaml
+#  - ../../../../templates/volsync

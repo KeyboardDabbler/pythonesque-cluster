@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app minecraft-pog
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: minecraft
+      version: 4.23.2
+      sourceRef:
+        kind: HelmRepository
+        name: itzg-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    image:
+      repository: ghcr.io/itzg/minecraft-server
+      tag: stable@sha256:8bd119f65ef6e65bdb12f756bfb44a305b36b1adf868ade8027014fabc29c755
+    resources:
+      requests:
+        cpu: 500m
+        memory: 2Gi
+      limits:
+        memory: 12Gi
+    securityContext:
+      runAsUser: &uid 568
+      fsGroup: *uid
+    livenessProbe:
+      enabled: false
+      command:
+        - echo
+      initialDelaySeconds: 30
+      periodSeconds: 5
+      failureThreshold: 20
+      successThreshold: 1
+      timeoutSeconds: 1
+    readinessProbe:
+      enabled: false
+      command:
+        - echo
+      initialDelaySeconds: 30
+      periodSeconds: 5
+      failureThreshold: 20
+      successThreshold: 1
+      timeoutSeconds: 1
+    startupProbe:
+      command:
+        - echo
+      enabled: false
+      failureThreshold: 30
+      periodSeconds: 10
+    extraEnv:
+      TZ: ${TIMEZONE}
+      USE_AIKAR_FLAGS: true
+      MEMORY: ""
+      JVM_XX_OPTS: "-XX:MaxRAMPercentage=75"
+    persistence:
+      dataDir:
+        enabled: true
+        existingClaim: *app
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: &host mcpog.${SECRET_DOMAIN_PUBLIC}
+    minecraftServer:
+      type: PAPER
+      eula: true
+      version: "1.21.1"
+      motd: "Be Garbage"
+      difficulty: hard
+      gameMode: survival
+      viewDistance: 32
+      dumpServerProperties: true
+      ops: "WingsGB"
+      whitelist: "duckieyumie,WingsGB,AspastIIcBean,Taytaymademegay,blm7272,pongu69"
+      spigetResources:
+      -
+      -
+      rcon:
+        enabled: true
+      extraPorts:
+      - name: metrics
+        containerPort: 9225
+        protocol: TCP
+        service:
+          enabled: true
+          embedded: false
+          type: ClusterIP
+          port: 9225
+        ingress:
+          ingressClassName: external
+          enabled: true
+          annotations:
+            external-dns.alpha.kubernetes.io/target: mc.${SECRET_DOMAIN_PUBLIC}
+            external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+          hosts:
+           - name: *host
+  valuesFrom:
+  - kind: Secret
+    name: minecraft-mcpog-secret
+    valuesKey: RCON_PASSWORD
+    targetPath: minecraftServer.rcon.password
