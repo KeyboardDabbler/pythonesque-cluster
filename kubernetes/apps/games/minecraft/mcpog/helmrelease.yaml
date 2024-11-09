@@ -23,8 +23,8 @@ spec:
       retries: 3
   values:
     image:
-      repository: ghcr.io/itzg/minecraft-server
-      tag: stable@sha256:8bd119f65ef6e65bdb12f756bfb44a305b36b1adf868ade8027014fabc29c755
+      repository: itzg/minecraft-server
+      tag: stable
     resources:
       requests:
         cpu: 500m
@@ -60,9 +60,7 @@ spec:
       periodSeconds: 10
     extraEnv:
       TZ: ${TIMEZONE}
-      USE_AIKAR_FLAGS: true
       MEMORY: ""
-      JVM_XX_OPTS: "-XX:MaxRAMPercentage=75"
     persistence:
       dataDir:
         enabled: true
@@ -70,19 +68,22 @@ spec:
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: &host mcpog.${SECRET_DOMAIN_PUBLIC}
     minecraftServer:
-      type: PAPER
       eula: true
-      version: "1.21.1"
-      motd: "Be Garbage"
+      version: 1.21.1
+      type: PAPER
       difficulty: hard
-      gameMode: survival
-      viewDistance: 32
-      dumpServerProperties: true
-      ops: "WingsGB"
       whitelist: "duckieyumie,WingsGB,AspastIIcBean,Taytaymademegay,blm7272,pongu69"
-      spigetResources:
-      -
-      -
+      ops: "WingsGB"
+      pvp: true
+      motd: "Be Garbage"
+      viewDistance: 32
+      forceReDownload: true
+      memory: ""
+      jvmXXOpts: "-XX:MaxRAMPercentage=70 -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paper.jar --nogui"
+      # spigetResources:
+      #   - 36618
+      #   # Dynmap
+      #   - 274
       rcon:
         enabled: true
       extraPorts:
