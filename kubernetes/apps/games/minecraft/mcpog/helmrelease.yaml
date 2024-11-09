@@ -72,8 +72,8 @@ spec:
       version: 1.21.1
       type: PAPER
       difficulty: hard
-      whitelist: "duckieyumie,WingsGB,AspastIIcBean,Taytaymademegay,blm7272,pongu69"
-      ops: "WingsGB"
+      whitelist: "8ec03a15-8380-4ebe-9b18-2446d5c6e821,cdf8251d-5ddc-4453-acab-8ca919aae5c5,0ae19002-33fa-4d0b-af12-366472a4e4df,23781a8d-ecf4-4a8a-8dfe-a3b77ca31bf8,6d9bf4fb-b980-4dd1-9dd4-8c32e400f2b9,2a9bb4a5-f365-4205-8f4b-addeadaedb0d"
+      ops: "cdf8251d-5ddc-4453-acab-8ca919aae5c5"
       pvp: true
       motd: "Be Garbage"
       viewDistance: 32
