@@ -89,7 +89,7 @@ spec:
       #  - 274 # Dynmap
         - 62325 # GSit
       #  - 36618 # Prometheus Exporter
-        - 18494 # DiscordSRV
+      #  - 18494 # DiscordSRV
       rcon:
         enabled: true
       extraPorts:
