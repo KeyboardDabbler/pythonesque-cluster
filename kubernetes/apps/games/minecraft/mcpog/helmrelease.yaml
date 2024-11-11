@@ -80,10 +80,21 @@ spec:
       forceReDownload: true
       memory: ""
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
-      # spigetResources:
-      #   - 36618
-      #   # Dynmap
-      #   - 274
+      spigetResources:
+        # ProtocolLib
+        - 1997
+        # ChestSort
+        - 59773
+        # ResurrectionChest
+        - 57541
+        # Simple Elevators
+        - 44462
+        # Chunky
+        - 81534
+        # Dynmap
+        - 274
+        # GSit
+        - 62325
       rcon:
         enabled: true
       extraPorts:
