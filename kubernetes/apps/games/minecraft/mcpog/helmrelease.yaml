@@ -81,20 +81,15 @@ spec:
       memory: ""
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
       spigetResources:
-        # ProtocolLib
-        - 1997
-        # ChestSort
-        - 59773
-        # ResurrectionChest
-        - 57541
-        # Simple Elevators
-        - 44462
-        # Chunky
-        - 81534
-        # Dynmap
-        - 274
-        # GSit
-        - 62325
+        - 1997 # ProtocolLib
+        - 59773 # ChestSort
+        - 57541 # ResurrectionChest
+        - 44462 # Simple Elevators
+        - 81534 # Chunky
+      #  - 274 # Dynmap
+        - 62325 # GSit
+      #  - 36618 # Prometheus Exporter
+        - 18494 # DiscordSRV
       rcon:
         enabled: true
       extraPorts:
