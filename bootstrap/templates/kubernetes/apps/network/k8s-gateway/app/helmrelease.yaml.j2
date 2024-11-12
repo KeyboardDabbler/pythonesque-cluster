@@ -28,6 +28,10 @@ spec:
       type: LoadBalancer
       port: 53
       annotations:
-        io.cilium/lb-ipam-ips: "#{ bootstrap_cloudflare.gateway_vip }#"
+        lbipam.cilium.io/ips: "#{ bootstrap_cloudflare.gateway_vip }#"
+      #% if bootstrap_loadbalancer_mode in ['dsr']  %#
       externalTrafficPolicy: Cluster
+      #% else %#
+      externalTrafficPolicy: Local
+      #% endif %#
     watchedResources: ["Ingress", "Service"]
