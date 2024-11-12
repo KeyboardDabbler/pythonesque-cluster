@@ -86,13 +86,11 @@ spec:
         - 57541 # ResurrectionChest
         - 44462 # Simple Elevators
         - 81534 # Chunky
-      #  - 274 # Dynmap
         - 62325 # GSit
       #  - 36618 # Prometheus Exporter
       #  - 18494 # DiscordSRV
       #  - 1 # WorldEdit
       #  - 1 # WorldGuard
-      #  - 390 # Multiverse-Core
       rcon:
         enabled: true
       extraPorts:
