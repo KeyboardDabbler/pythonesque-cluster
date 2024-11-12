@@ -90,6 +90,9 @@ spec:
         - 62325 # GSit
       #  - 36618 # Prometheus Exporter
       #  - 18494 # DiscordSRV
+      #  - 1 # WorldEdit
+      #  - 1 # WorldGuard
+      #  - 390 # Multiverse-Core
       rcon:
         enabled: true
       extraPorts:
