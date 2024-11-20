@@ -1,7 +1,12 @@
 ---
 autoDirectNodeRoutes: true
+bandwidthManager:
+  enabled: false
+  bbr: true
 bpf:
-  masquerade: false # Required for Talos `.machine.features.hostDNS.forwardKubeDNSToHost`
+  hostLegacyRouting: true
+  masquerade: true
+  tproxy: true
 cgroup:
   automount:
     enabled: false
@@ -9,10 +14,9 @@ cgroup:
 cluster:
   id: 1
   name: "pythonesque-cluster"
-cni:
-  exclusive: false
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ eth+
+enableRuntimeDeviceDetection: true
 endpointRoutes:
   enabled: true
 envoy:
@@ -30,10 +34,9 @@ l2announcements:
   enabled: true
 loadBalancer:
   algorithm: maglev
-  mode: snat
+  mode: dsr
 localRedirectPolicy: true
 operator:
-  replicas: 1
   rollOutPods: true
 rollOutCiliumPods: true
 routingMode: native
