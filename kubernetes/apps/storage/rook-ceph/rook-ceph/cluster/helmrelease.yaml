@@ -93,7 +93,7 @@ spec:
             cpu: "100m"
             memory: "512Mi"
           limits:
-            memory: "1Gi"
+            memory: "2Gi"
         mon:
           requests:
             cpu: "100m"
@@ -105,13 +105,13 @@ spec:
             cpu: "100m"
             memory: "2Gi"
           limits:
-            memory: "4Gi"
+            memory: "6Gi"
         mgr-sidecar:
           requests:
             cpu: "250m"
             memory: "40Mi"
           limits:
-            memory: "100Mi"
+            memory: "256Mi"
         crashcollector:
           requests:
             cpu: "15m"
@@ -203,44 +203,4 @@ spec:
       name: csi-ceph-blockpool
       isDefault: false
       deletionPolicy: Delete
-    cephObjectStores:
-      - name: ceph-objectstore
-        spec:
-          metadataPool:
-            failureDomain: host
-            replicated:
-              size: 3
-          dataPool:
-            failureDomain: host
-            erasureCoded:
-              dataChunks: 2
-              codingChunks: 1
-          preservePoolsOnDelete: true
-          gateway:
-            port: 80
-            resources:
-              requests:
-                cpu: 100m
-                memory: 1Gi
-              limits:
-                memory: 2Gi
-            instances: 2
-            priorityClassName: system-cluster-critical
-          healthCheck:
-            bucket:
-              interval: 60s
-        storageClass:
-          enabled: true
-          name: ceph-bucket
-          reclaimPolicy: Delete
-          volumeBindingMode: Immediate
-          parameters:
-            region: nz
-        ingress:
-          enabled: true
-          ingressClassName: internal
-          annotations:
-            external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN_LOCAL}
-          host:
-            name: rgw.${SECRET_DOMAIN_LOCAL}
-            path: /
+    cephObjectStores: []
