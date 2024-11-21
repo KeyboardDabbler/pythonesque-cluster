@@ -15,12 +15,32 @@ spec:
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-10Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
-    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"] # Use ReadOnlyMany for CephFS
     capacity: "${VOLSYNC_CAPACITY:-2Gi}"
     moverSecurityContext:
+      runAsNonRoot: true
       runAsUser: ${VOLSYNC_PUID:-568}
       runAsGroup: ${VOLSYNC_PGID:-568}
       fsGroup: ${VOLSYNC_PGID:-568}
+      seccompProfile: {type: "RuntimeDefault"}
     enableFileDeletion: true
     cleanupCachePVC: true
     cleanupTempPVC: true
+    moverResources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 1
+        memory: 6Gi
+    moverAffinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/created-by: volsync
+            namespaceSelector:
+              matchExpressions:
+                - key: kubernetes.io/metadata.name
+                  operator: Exists

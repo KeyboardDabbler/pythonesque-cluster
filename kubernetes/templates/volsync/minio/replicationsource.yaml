@@ -18,14 +18,31 @@ spec:
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
+      runAsNonRoot: true
       runAsUser: ${VOLSYNC_PUID:-568}
       runAsGroup: ${VOLSYNC_PGID:-568}
       fsGroup: ${VOLSYNC_PGID:-568}
-    pruneIntervalDays: 10
+      seccompProfile: {type: "RuntimeDefault"}
+    pruneIntervalDays: ${PRUNE:-14}
     retain:
-      hourly: 24
-      daily: 10
-      weekly: 5
-      monthly: 3
+      hourly: ${HOURLY:-24}
+      daily: ${DAILY:-10}
+      weekly: ${WEEKLY:-5}
+      monthly: ${MONTHLY:-3}
+    moverResources:
+      limits:
+        cpu: 500m
+        memory: 2Gi
+    moverAffinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/created-by: volsync
+            namespaceSelector:
+              matchExpressions:
+                - key: kubernetes.io/metadata.name
+                  operator: Exists
 
 
